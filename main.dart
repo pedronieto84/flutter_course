@@ -1,25 +1,18 @@
-// POO: Polimorfismo
+// POO: Abstract Classes 
 
-class Animal {
-  void hablar() => print("El animal hace un sonido");
+abstract class Volador {
+  void volar();
 }
 
-class Perro extends Animal {
+class Pajaro implements Volador {
   @override
-  void hablar() => print("Guau");
-}
-
-class Gato extends Animal {
-  @override
-  void hablar() => print("Miau");
-}
-
-
-void main() {
-  // Lista de animales, pero con tipos derivados (Perro, Gato)
-  List<Animal> animales = [Perro(), Gato(), Animal()];
-
-  for (var animal in animales) {
-    animal.hablar(); // Polimorfismo: llama al método correcto según el tipo real
+  void volar() {
+    print("Estoy volando");
   }
+}
+
+void main(List<String> args) {
+  Pajaro pajaro = Pajaro();
+  pajaro.volar(); // Imprime: Estoy volando
+  
 }
