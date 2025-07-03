@@ -1,18 +1,28 @@
-// POO: Abstract Classes 
-
+// Interfaz 1
 abstract class Volador {
   void volar();
 }
 
-class Pajaro implements Volador {
+// Interfaz 2
+abstract class Nadador {
+  void nadar();
+}
+
+// Clase que implementa ambas interfaces
+class Pato implements Volador, Nadador {
   @override
   void volar() {
-    print("Estoy volando");
+    print("El pato está volando.");
+  }
+
+  @override
+  void nadar() {
+    print("El pato está nadando.");
   }
 }
 
-void main(List<String> args) {
-  Pajaro pajaro = Pajaro();
-  pajaro.volar(); // Imprime: Estoy volando
-  
+void main() {
+  Pato pato = Pato();
+  pato.volar(); // El pato está volando.
+  pato.nadar(); // El pato está nadando.
 }
