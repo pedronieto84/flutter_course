@@ -1,24 +1,19 @@
-// Clase: Encapsulació getters i setters
-class Persona {
-  String nombre; // público, se puede acceder directamente desde fuera
-  int _edad; // privado al archivo se pone con _al principio  
+// POO: Herencia
 
-  Persona(this.nombre, this._edad);
+class Animal {
+  void hablar() => print("El animal hace un sonido");
+}
 
-  int get edad => _edad; // Si comento el getter, me da error el acceso a edad
-  set edad(int valor) {
-    if (valor >= 0) _edad = valor;
-  }
-
-  void saludar() {
-    // Método para obtener la longitud del nombre
-    print("Hola, soy $nombre y tengo $edad años.");
-  }
+class Perro extends Animal {
+  @override // Sobreescritura del método hablar
+  void hablar() => print("Guau");
 }
 
 void main() {
-  var persona =  Persona("Pedro", 41);
-  persona.edad = 42; // Uso del setter
-  persona.nombre = "Juan"; // Uso del setter para cambiar el nombre no he necesitado un setter porque era público
-  persona.saludar();
+  Animal animal = Animal();
+  animal.hablar(); // Imprime: El animal hace un sonido
+
+  Perro perro = Perro();
+  perro.hablar(); // Imprime: Guau
+  
 }
