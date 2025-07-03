@@ -1,28 +1,15 @@
-// Interfaz 1
-abstract class Volador {
-  void volar();
+class Persona {
+  String nombre;
+  Persona(this.nombre); // Constructor de la clase Persona
 }
 
-// Interfaz 2
-abstract class Nadador {
-  void nadar();
+class Empleado extends Persona {
+  int salario;
+
+  Empleado(String nombre, this.salario) : super(nombre);
 }
 
-// Clase que implementa ambas interfaces
-class Pato implements Volador, Nadador {
-  @override
-  void volar() {
-    print("El pato está volando.");
-  }
-
-  @override
-  void nadar() {
-    print("El pato está nadando.");
-  }
-}
-
-void main() {
-  Pato pato = Pato();
-  pato.volar(); // El pato está volando.
-  pato.nadar(); // El pato está nadando.
+main() {
+  Empleado empleado = Empleado("Juan", 50000);
+  print("Nombre: ${empleado.nombre}, Salario: ${empleado.salario}");
 }
