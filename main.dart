@@ -1,15 +1,6 @@
-class Persona {
-  String nombre;
-  Persona(this.nombre); // Constructor de la clase Persona
-}
+import 'perro.dart'; // això també importa 'animal.dart' indirectament
 
-class Empleado extends Persona {
-  int salario;
-
-  Empleado(String nombre, this.salario) : super(nombre);
-}
-
-main() {
-  Empleado empleado = Empleado("Juan", 50000);
-  print("Nombre: ${empleado.nombre}, Salario: ${empleado.salario}");
+void main() {
+  var p = Perro("Toby", "Golden Retriever");
+  p.hablar();
 }
