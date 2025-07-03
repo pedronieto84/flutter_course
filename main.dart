@@ -1,19 +1,25 @@
-// POO: Herencia
+// POO: Polimorfismo
 
 class Animal {
   void hablar() => print("El animal hace un sonido");
 }
 
 class Perro extends Animal {
-  @override // Sobreescritura del método hablar
+  @override
   void hablar() => print("Guau");
 }
 
-void main() {
-  Animal animal = Animal();
-  animal.hablar(); // Imprime: El animal hace un sonido
+class Gato extends Animal {
+  @override
+  void hablar() => print("Miau");
+}
 
-  Perro perro = Perro();
-  perro.hablar(); // Imprime: Guau
-  
+
+void main() {
+  // Lista de animales, pero con tipos derivados (Perro, Gato)
+  List<Animal> animales = [Perro(), Gato(), Animal()];
+
+  for (var animal in animales) {
+    animal.hablar(); // Polimorfismo: llama al método correcto según el tipo real
+  }
 }
