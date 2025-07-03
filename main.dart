@@ -1,6 +1,6 @@
-import 'perro.dart'; // això també importa 'animal.dart' indirectament
+import 'animal.dart' as zoo;
 
 void main() {
-  var p = Perro("Toby", "Golden Retriever");
-  p.hablar();
+  var a = zoo.Animal("Leo");
+  a.hablar();
 }
