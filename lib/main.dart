@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'pages/pagina1.dart';
+import 'pages/pagina2.dart';
+import 'pages/pagina3.dart';
 
 void main() {
   runApp(MiApp());
@@ -7,49 +10,49 @@ void main() {
 class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: TextoDinamico(),
-        ),
-      ),
-    );
+    return MaterialApp(home: MenuNavegacion());
   }
 }
 
-class TextoDinamico extends StatefulWidget {
+class MenuNavegacion extends StatefulWidget {
   @override
-  State<TextoDinamico> createState() => _TextoDinamicoState();
+  _MenuNavegacionState createState() => _MenuNavegacionState();
 }
 
-class _TextoDinamicoState extends State<TextoDinamico> {
-  String mensaje = 'Hola Flutter';
+class _MenuNavegacionState extends State<MenuNavegacion> {
+  int _paginaActual = 0;
 
-  void cambiarTexto() {
-    setState(() {
-      mensaje = 'Has pulsado el botón';
-    });
-  }
+  final List<Widget> _paginas = const [Pagina1(), Pagina2(), Pagina3()];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          mensaje,
-          style: const TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 25,
-            color: Colors.red,
+    return Scaffold(
+      body: IndexedStack(index: _paginaActual, children: _paginas),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue, // Cambia el color de fondo
+        selectedItemColor: Colors.white, // Color del ítem seleccionado
+        unselectedItemColor:
+            Colors.white70, // Color de los ítems no seleccionados
+        currentIndex: _paginaActual,
+        onTap: (index) {
+          setState(() {
+            _paginaActual = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.looks_one),
+            label: 'Página 1',
           ),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: cambiarTexto,
-          child: const Text('Cambiar texto'),
-        ),
-      ],
+          BottomNavigationBarItem(
+            icon: Icon(Icons.looks_two),
+            label: 'Página 2',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.looks_3), 
+            label: 'Página 3'),
+        ],
+      ),
     );
   }
 }
