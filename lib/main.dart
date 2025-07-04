@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    MiApp(),
+  );
+}
+
+class MiApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       home: Scaffold(
         body: Center(
           child: Text(
-            'Hola Flutter',
-            style: TextStyle(
-              fontFamily: 'Arial',
-              fontSize: 15,
-              color: Colors.red,
-            ),
+            'Hola Flutter'
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
+
+
