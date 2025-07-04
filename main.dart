@@ -1,39 +1,12 @@
-// Dart: Funciones
+void imprimirElemento<T>(T valor) {
+  print('Valor: $valor');
+}
+
 void main() {
-  saludar();
-  saludarPersona('Juan');
-  int resultado = sumar(5, 3);
-  print('Resultado de la suma: $resultado');
-  int producto = multiplicar(4, 2);
-  print('Producto: $producto');
-  mostrarMensaje('¡Hola, Dart!', 'Even');
-  imprimirDatos(nombre: 'Luis');
-}
+  imprimirElemento<String>("Hola");
+  imprimirElemento<int>(123);
+  imprimirElemento<List<String>>(["uno", "dos"]);
 
-// Sin parametros
-void saludar() {
-  print('Hola, mundo!');
-}
-
-// Con parametros
-void saludarPersona(String nombre) {
-  print('Hola, $nombre!');
-}
-
-// Con retorno
-int sumar(int a, int b) {
-  return a + b;
-}
-
-// Arrow function solamente si es una sola línea
-int multiplicar(int x, int y) => x * y;
-
-// Con parámetros opcionales por defecto
-void mostrarMensaje(String mensaje, [String autor = 'Anónimo']) {
-  print('"$mensaje" - $autor');
-}
-
-// Con parámetros nombrados
-void imprimirDatos({required String nombre, int edad = 0}) {
-  print('Nombre: $nombre, Edad: $edad');
+  // Exemple de com dona error gràcies al generic
+  imprimirElemento<String>(123);
 }
