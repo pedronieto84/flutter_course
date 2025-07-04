@@ -1,52 +1,54 @@
-// Operar con mapas en Dart
+// Set: operaciones básicas
 void main() {
-  // Crear un mapa
-  Map<String, int> mapa = {"a": 1, "b": 2};
-  print("Mapa inicial: $mapa");
+  // Crear un Set
+  Set<int> s = {1, 2, 3};
+  print("Set inicial: $s");
 
-  // Acceder al valor por clave
-  print("Valor de 'a': ${mapa["a"]}");
+  // Añadir un elemento
+  s.add(4);
+  print("Después de add(4): $s");
 
-  // Modificar el valor de una clave
-  mapa["a"] = 100;
-  print("Mapa después de modificar 'a': $mapa");
+  // Eliminar un elemento
+  s.remove(2);
+  print("Después de remove(2): $s");
 
-  // Añadir una nueva clave-valor
-  mapa["nueva"] = 3;
-  print("Mapa después de añadir 'nueva': $mapa");
+  // Vaciar el set
+  s.clear();
+  print("Después de clear(): $s");
 
-  // Eliminar una clave
-  mapa.remove("b");
-  print("Mapa después de eliminar 'b': $mapa");
-
-  // Ver si contiene una clave
-  print("¿Contiene clave 'a'? ${mapa.containsKey("a")}");
+  // Volver a poblarlo
+  s.addAll([1, 2, 3, 4, 5, 6]);
 
   // Ver si contiene un valor
-  print("¿Contiene valor 3? ${mapa.containsValue(3)}");
+  print("¿Contiene el 3?: ${s.contains(3)}"); // true
+  print("¿Contiene el 9?: ${s.contains(9)}"); // false
 
-  // Recorrer claves
-  print("Recorriendo claves:");
-  for (var clave in mapa.keys) {
-    print("- Clave: $clave");
+  // Longitud
+  print("Longitud del set: ${s.length}");
+
+  // Recorrer con for-in
+  for (var valor in s) {
+    print("Elemento: $valor");
   }
 
-  // Recorrer valores
-  print("Recorriendo valores:");
-  for (var valor in mapa.values) {
-    print("- Valor: $valor");
-  }
+  // Filtrar: números pares
+  Set<int> pares = s.where((n) => n % 2 == 0).toSet();
+  print("Números pares: $pares");
 
-  // Recorrer clave-valor con .entries
-  print("Recorriendo mapa con entries:");
-  for (var entrada in mapa.entries) {
-    print("- ${entrada.key}: ${entrada.value}");
-  }
+  // Mapear: elevar al cuadrado
+  Set<int> cuadrados = s.map((n) => n * n).toSet();
+  print("Cuadrados: $cuadrados");
 
-  // Tamaño del mapa
-  print("Tamaño del mapa: ${mapa.length}");
+  // Unión
+  Set<int> otros = {5, 6, 7, 8};
+  Set<int> union = s.union(otros);
+  print("Unión: $union"); // {1, 2, 3, 4, 5, 6, 7, 8}
 
-  // Vaciar el mapa
-  mapa.clear();
-  print("Mapa después de .clear(): $mapa");
+  // Intersección (elementos comunes)
+  Set<int> interseccion = s.intersection(otros);
+  print("Intersección: $interseccion"); // {5, 6}
+
+  // Diferencia (elementos que están en s pero no en otros)
+  Set<int> diferencia = s.difference(otros);
+  print("Diferencia: $diferencia"); // {1, 2, 3, 4}
 }
