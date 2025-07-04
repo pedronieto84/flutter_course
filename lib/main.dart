@@ -1,53 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:dni_nie_validator/dni_nie_validator.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-// With Flutter, you create user interfaces by combining "widgets"
-// You'll learn all about them (and much more) throughout this course!
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // Every custom widget must have a build() method
-  // It tells Flutter, which widgets make up your custom widget
-  // Again: You'll learn all about that throughout the course!
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Below, a bunch of built-in widgets are used (provided by Flutter)
-    // They will be explained in the next sections
-    // In this course, you will, of course, not just use them a lot but
-    // also learn about many other widgets!
     return MaterialApp(
-      title: 'Hello World',
-      theme: ThemeData(useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Hello World'),
-        ),
-        body: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text(
-                'Flutter - The Complete Guide',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      debugShowCheckedModeBanner: false,
+      title: 'DNI/NIE validator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'DNI/NIE validator'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
+  final myController = TextEditingController();
+  // Create a global key for your scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(title: Text(widget.title)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'DNI/NIE Validator',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: myController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.teal),
+                  ),
+                  hintText: 'Enter a document number',
+                  labelText: 'DNI/NIE number',
+                  prefixIcon: const Icon(
+                    Icons.article_outlined,
+                    color: Colors.blue,
+                  ),
                 ),
               ),
-              SizedBox(height: 16),
-              Text(
-                'Learn Flutter step-by-step, from the ground up.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _validateDocument(myController.text);
+        },
+        child: Icon(Icons.check),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
+  void _validateDocument(String value) {
+    String _validation = '';
+    if (value.isValidDNI()) {
+      _validation = 'DNI Valid';
+    } else if (value.isValidNIE()) {
+      _validation = 'NIE Valid';
+    } else {
+      _validation = 'Invalid document';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$_validation'),
+        action: SnackBarAction(label: 'Accept', onPressed: () {}),
       ),
     );
   }
