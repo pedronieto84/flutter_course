@@ -1,47 +1,25 @@
-// LIST operaciones más habituales
+// LIST operaciones avanzadas
 
 void main() {
   // Crear una lista
-  List<String> frutas = ["manzana", "pera", "plátano"];
+  List<int> numeros = [1, 2, 3, 4, 5, 6];
 
-  // Acceder a un elemento por índice
-  print("Primera fruta: ${frutas[0]}"); // manzana
+  // Filtrar pares
+  List<int> pares = numeros.where((n) => n % 2 == 0).toList();
+  print("Números pares: $pares"); // [2, 4, 6]
 
-  // Modificar un elemento
-  frutas[1] = "naranja";
-  print("Lista modificada: $frutas"); // [manzana, naranja, plátano]
+  // Doblar los números
+  List<int> dobles = numeros.map((n) => n * 2).toList();
+  print("Números dobles: $dobles"); // [2, 4, 6, 8, 10, 12]
 
-  // Añadir un elemento al final
-  frutas.add("kiwi");
-  print("Después de añadir: $frutas");
+  // Encontrar primero donde se cumple una condición
+  int primerMayorQue3 = numeros.firstWhere((n) => n > 3);
+  print("Primer número > 3: $primerMayorQue3"); // 4
 
-  // Añadir varios elementos
-  frutas.addAll(["melón", "sandía"]);
-  print("Después de añadir varios: $frutas");
-
-  // Insertar en una posición concreta
-  frutas.insert(1, "limón");
-  print("Después de insertar: $frutas");
-
-  // Eliminar por valor
-  frutas.remove("plátano");
-  print("Después de eliminar 'plátano': $frutas");
-
-  // Eliminar por índice
-  frutas.removeAt(0);
-  print("Después de eliminar en índice 0: $frutas");
-
-  // Ver si contiene un valor
-  print("Contiene 'kiwi'? ${frutas.contains("kiwi")}");
-
-  // Ordenar la lista
-  frutas.sort();
-  print("Ordenada: $frutas");
-
-  // Revertir el orden
-  frutas = frutas.reversed.toList();
-  print("Revertida: $frutas");
-
-  // Longitud de la lista
-  print("Número de frutas: ${frutas.length}");
+  // Combinar acciones
+  List<String> textoDeImpares = numeros
+      .where((n) => n % 2 != 0) // Filtrar impares
+      .map((n) => "Impar: $n") // Convertir a texto
+      .toList(); // Devuelve una lista
+  print(textoDeImpares); // [Impar: 1, Impar: 3, Impar: 5]
 }
