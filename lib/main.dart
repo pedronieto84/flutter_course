@@ -1,57 +1,70 @@
 import 'package:flutter/material.dart';
-import 'pages/pagina1.dart';
-import 'pages/pagina2.dart';
-import 'pages/pagina3.dart';
+import 'pages/detail_page.dart';
 
-void main() {
-  runApp(MiApp());
-}
+void main() => runApp(MiApp());
 
 class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MenuNavegacion());
+    return MaterialApp(
+      title: 'Dynamic Navigation Example',
+      home: HomePage(),
+      routes: {DetailPage.routeName: (context) => DetailPage()},
+    );
   }
 }
 
-class MenuNavegacion extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _MenuNavegacionState createState() => _MenuNavegacionState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MenuNavegacionState extends State<MenuNavegacion> {
-  int _paginaActual = 0;
+class _HomePageState extends State<HomePage> {
+  final _formKey = GlobalKey<FormState>();
+  final _idController = TextEditingController();
 
-  final List<Widget> _paginas = const [Pagina1(), Pagina2(), Pagina3()];
+  @override
+  void dispose() {
+    _idController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToDetail() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.pushNamed(
+        context,
+        DetailPage.routeName,
+        arguments: _idController.text,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _paginaActual, children: _paginas),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue, // Cambia el color de fondo
-        selectedItemColor: Colors.white, // Color del ítem seleccionado
-        unselectedItemColor:
-            Colors.white70, // Color de los ítems no seleccionados
-        currentIndex: _paginaActual,
-        onTap: (index) {
-          setState(() {
-            _paginaActual = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.looks_one),
-            label: 'Página 1',
+      appBar: AppBar(title: Text('Enter ID')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(labelText: 'Enter ID'),
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Please enter an ID'
+                    : null,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _navigateToDetail,
+                child: Text('Go to Detail Page'),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.looks_two),
-            label: 'Página 2',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.looks_3), 
-            label: 'Página 3'),
-        ],
+        ),
       ),
     );
   }
