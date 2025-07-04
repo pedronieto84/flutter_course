@@ -1,29 +1,47 @@
-// Bucle for-in
+// LIST operaciones más habituales
 
 void main() {
-  // LIST
+  // Crear una lista
+  List<String> frutas = ["manzana", "pera", "plátano"];
 
-  List<String> colores = ["rojo", "verde", "azul"];
+  // Acceder a un elemento por índice
+  print("Primera fruta: ${frutas[0]}"); // manzana
 
-  for (var color in colores) {
-    print("for-in: $color");
-  }
+  // Modificar un elemento
+  frutas[1] = "naranja";
+  print("Lista modificada: $frutas"); // [manzana, naranja, plátano]
 
-  // SET
-  Set<int> numeros = {10, 20, 30};
+  // Añadir un elemento al final
+  frutas.add("kiwi");
+  print("Después de añadir: $frutas");
 
-  for (var numero in numeros) {
-    print("Número: $numero");
-  }
+  // Añadir varios elementos
+  frutas.addAll(["melón", "sandía"]);
+  print("Después de añadir varios: $frutas");
 
-  // MAP
-    Map<String, int> edades = {
-    "Pedro": 30,
-    "Laura": 25,
-    "Ana": 28
-  };
+  // Insertar en una posición concreta
+  frutas.insert(1, "limón");
+  print("Después de insertar: $frutas");
 
-  for (var entrada in edades.entries) {
-    print("${entrada.key} tiene ${entrada.value} años");
-  }
+  // Eliminar por valor
+  frutas.remove("plátano");
+  print("Después de eliminar 'plátano': $frutas");
+
+  // Eliminar por índice
+  frutas.removeAt(0);
+  print("Después de eliminar en índice 0: $frutas");
+
+  // Ver si contiene un valor
+  print("Contiene 'kiwi'? ${frutas.contains("kiwi")}");
+
+  // Ordenar la lista
+  frutas.sort();
+  print("Ordenada: $frutas");
+
+  // Revertir el orden
+  frutas = frutas.reversed.toList();
+  print("Revertida: $frutas");
+
+  // Longitud de la lista
+  print("Número de frutas: ${frutas.length}");
 }
