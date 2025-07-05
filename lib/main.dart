@@ -18,6 +18,15 @@ class _SimpleFormPageState extends State<SimpleFormPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   String? _sexo; // Variable para almacenar el sexo seleccionado
+  String? _nombreMostrado;
+  String? _sexoMostrado;
+
+  void _mostrarDatos() {
+    setState(() {
+      _nombreMostrado = _nameController.text;
+      _sexoMostrado = _sexo;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +67,28 @@ class _SimpleFormPageState extends State<SimpleFormPage> {
                   validator: (value) =>
                       value == null ? 'Selecciona un sexo' : null,
                 ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _mostrarDatos,
+                  child: Text('Mostrar datos'),
+                ),
+                SizedBox(height: 20),
+                if (_nombreMostrado != null || _sexoMostrado != null)
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Nombre: 			${_nombreMostrado ?? "-"}'),
+                        Text('Sexo: 			${_sexoMostrado ?? "-"}'),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
