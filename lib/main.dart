@@ -1,98 +1,56 @@
 import 'package:flutter/material.dart';
+import 'pages/pagina_containers.dart';
+import 'pages/pagina_column_row.dart';
+import 'pages/pagina_stack.dart';
 
 void main() => runApp(MiApp());
 
 class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Formulario Simple', home: SimpleFormPage());
+    return MaterialApp(title: 'Ejemplo de Layouts', home: MenuNavegacion());
   }
 }
 
-class SimpleFormPage extends StatefulWidget {
+class MenuNavegacion extends StatefulWidget {
   @override
-  State<SimpleFormPage> createState() => _SimpleFormPageState();
+  _MenuNavegacionState createState() => _MenuNavegacionState();
 }
 
-class _SimpleFormPageState extends State<SimpleFormPage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  String? _sexo; // Variable para almacenar el sexo seleccionado
-  String? _nombreMostrado;
-  String? _sexoMostrado;
+class _MenuNavegacionState extends State<MenuNavegacion> {
+  int _paginaActual = 0;
 
-  void _mostrarDatos() {
-    setState(() {
-      _nombreMostrado = _nameController.text;
-      _sexoMostrado = _sexo;
-    });
-  }
+  final List<Widget> _paginas = const [
+    PaginaContainers(),
+    PaginaColumnRow(),
+    PaginaStack(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Formulario Simple')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Nombre',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 20), // Space between fields
-                DropdownButtonFormField<String>(
-                  value: _sexo,
-                  decoration: InputDecoration(
-                    labelText: 'Sexo',
-                    border: OutlineInputBorder(),
-                    hintText: 'No seleccionado',
-                  ),
-                  items: const [
-                    DropdownMenuItem(value: 'Hombre', child: Text('Hombre')),
-                    DropdownMenuItem(value: 'Mujer', child: Text('Mujer')),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _sexo = value;
-                    });
-                  },
-                  validator: (value) =>
-                      value == null ? 'Selecciona un sexo' : null,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _mostrarDatos,
-                  child: Text('Mostrar datos'),
-                ),
-                SizedBox(height: 20),
-                if (_nombreMostrado != null || _sexoMostrado != null)
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Nombre: 			${_nombreMostrado ?? "-"}'),
-                        Text('Sexo: 			${_sexoMostrado ?? "-"}'),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+      body: IndexedStack(index: _paginaActual, children: _paginas),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        currentIndex: _paginaActual,
+        onTap: (index) {
+          setState(() {
+            _paginaActual = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.crop_square),
+            label: 'Containers',
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.view_column),
+            label: 'Column/Row',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Stack'),
+        ],
       ),
     );
   }
