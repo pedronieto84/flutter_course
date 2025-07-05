@@ -6,19 +6,31 @@ class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ejemplo Padre-Hijo',
+      title: 'Ejemplo Hijo a Padre',
       home: Scaffold(
-        appBar: AppBar(title: Text('Padre e Hijo')),
+        appBar: AppBar(title: Text('Comunicación Hijo → Padre')),
         body: Center(child: Padre()),
       ),
     );
   }
 }
 
-class Padre extends StatelessWidget {
+class Padre extends StatefulWidget {
+  @override
+  State<Padre> createState() => _PadreState();
+}
+
+class _PadreState extends State<Padre> {
+  String mensaje = 'Esperando mensaje del hijo...';
+
+  void actualizarMensaje(String nuevoMensaje) {
+    setState(() {
+      mensaje = nuevoMensaje;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String mensaje = '¡Hola desde el padre!';
     return Container(
       padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -35,7 +47,12 @@ class Padre extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 20),
-          Hijo(texto: mensaje),
+          Hijo(onMensaje: actualizarMensaje),
+          SizedBox(height: 20),
+          Text(
+            mensaje,
+            style: TextStyle(fontSize: 18, color: Colors.blue[900]),
+          ),
         ],
       ),
     );
@@ -43,8 +60,8 @@ class Padre extends StatelessWidget {
 }
 
 class Hijo extends StatelessWidget {
-  final String texto;
-  const Hijo({Key? key, required this.texto}) : super(key: key);
+  final void Function(String) onMensaje;
+  const Hijo({required this.onMensaje});
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +80,12 @@ class Hijo extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 10),
-          Text(texto, style: TextStyle(fontSize: 24)),
+          ElevatedButton(
+            onPressed: () => onMensaje('¡Mensaje enviado del hijo al padre!'),
+            child: Text('Enviar mensaje al padre'),
+          ),
         ],
       ),
     );
   }
 }
-
-// Para mostrar el ejemplo en la app, puedes usar Padre() como una de las páginas del menú o como body principal.
