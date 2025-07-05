@@ -6,9 +6,9 @@ class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ejemplo Hijo a Padre',
+      title: 'Comunicación entre Hermanos Bidireccional',
       home: Scaffold(
-        appBar: AppBar(title: Text('Comunicación Hijo → Padre')),
+        appBar: AppBar(title: Text('Hermanos: Mensajes en ambas direcciones')),
         body: Center(child: Padre()),
       ),
     );
@@ -21,11 +21,18 @@ class Padre extends StatefulWidget {
 }
 
 class _PadreState extends State<Padre> {
-  String mensaje = 'Esperando mensaje del hijo...';
+  String mensajeA = 'Sin mensaje de B';
+  String mensajeB = 'Sin mensaje de A';
 
-  void actualizarMensaje(String nuevoMensaje) {
+  void actualizarDesdeA(String nuevoMensaje) {
     setState(() {
-      mensaje = nuevoMensaje;
+      mensajeB = nuevoMensaje;
+    });
+  }
+
+  void actualizarDesdeB(String nuevoMensaje) {
+    setState(() {
+      mensajeA = nuevoMensaje;
     });
   }
 
@@ -43,47 +50,81 @@ class _PadreState extends State<Padre> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Componente Padre',
+            'Padre',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 20),
-          Hijo(onMensaje: actualizarMensaje),
+          HijoA(onEnviar: actualizarDesdeA, mensaje: mensajeA),
           SizedBox(height: 20),
-          Text(
-            mensaje,
-            style: TextStyle(fontSize: 18, color: Colors.blue[900]),
-          ),
+          HijoB(onEnviar: actualizarDesdeB, mensaje: mensajeB),
         ],
       ),
     );
   }
 }
 
-class Hijo extends StatelessWidget {
-  final void Function(String) onMensaje;
-  const Hijo({required this.onMensaje});
+class HijoA extends StatelessWidget {
+  final void Function(String) onEnviar;
+  final String mensaje;
+  const HijoA({required this.onEnviar, required this.mensaje});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.orange[50],
-        border: Border.all(color: Colors.deepOrange, width: 2),
+        color: Colors.green[50],
+        border: Border.all(color: Colors.green, width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Componente Hijo',
+            'Hijo A',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () => onMensaje('¡Mensaje enviado del hijo al padre!'),
-            child: Text('Enviar mensaje al padre'),
+            onPressed: () => onEnviar('¡Mensaje de A para B!'),
+            child: Text('Enviar a Hijo B'),
           ),
+          SizedBox(height: 10),
+          Text('Mensaje de B: $mensaje', style: TextStyle(fontSize: 16)),
+        ],
+      ),
+    );
+  }
+}
+
+class HijoB extends StatelessWidget {
+  final void Function(String) onEnviar;
+  final String mensaje;
+  const HijoB({required this.onEnviar, required this.mensaje});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.purple[50],
+        border: Border.all(color: Colors.purple, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Hijo B',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => onEnviar('¡Mensaje de B para A!'),
+            child: Text('Enviar a Hijo A'),
+          ),
+          SizedBox(height: 10),
+          Text('Mensaje de A: $mensaje', style: TextStyle(fontSize: 16)),
         ],
       ),
     );
