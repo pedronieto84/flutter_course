@@ -1,9 +1,17 @@
-void main() {
-  esperarYDecirHola();
+void main() async {
+  await ejecutarTareaSegura();
 }
 
-Future<void> esperarYDecirHola() async {
-  print('Esperando...');
-  await Future.delayed(Duration(seconds: 2));
-  print('¡Hola!');
+Future<void> ejecutarTareaSegura() async {
+  try {
+    String resultado = await tareaQueFalla();
+    print('Resultado: $resultado');
+  } catch (error) {
+    print('⚠️ Ocurrió un error: $error');
+  }
+}
+
+Future<String> tareaQueFalla() async {
+  await Future.delayed(Duration(seconds: 1));
+  throw Exception('Algo salió mal...');
 }
