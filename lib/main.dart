@@ -1,17 +1,22 @@
-void main() async {
-  await ejecutarTareaSegura();
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
 }
 
-Future<void> ejecutarTareaSegura() async {
-  try {
-    String resultado = await tareaQueFalla();
-    print('Resultado: $resultado');
-  } catch (error) {
-    print('⚠️ Ocurrió un error: $error');
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Hola Mundo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Hola Mundo'),
+        ),
+        body: Center(
+          child: Text('¡Hola Mundo!', style: TextStyle(fontSize: 24)),
+        ),
+      ),
+    );
   }
-}
-
-Future<String> tareaQueFalla() async {
-  await Future.delayed(Duration(seconds: 1));
-  throw Exception('Algo salió mal...');
 }
