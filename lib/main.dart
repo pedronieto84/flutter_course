@@ -51,8 +51,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-
-
   // Función para registrar usuario con email, contraseña e imagen
   Future<void> registerUser() async {
     setState(() {
@@ -189,6 +187,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     errorMessage,
                     style: TextStyle(color: Colors.red),
                   ), // Muestra el error
+                ),
+
+              // Container para mostrar la imagen descargada desde Storage si existe URL
+              if (_uploadedImageUrl != null)
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                  ), // Espacio arriba del container
+                  child: Column(
+                    children: [
+                      Text(
+                        'Imagen descargada desde Storage:', // Título descriptivo
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ), // Texto en negrita
+                      ),
+                      SizedBox(height: 8), // Espacio vertical
+                      Container(
+                        width: 120, // Ancho fijo del contenedor
+                        height: 120, // Alto fijo del contenedor
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.blueAccent,
+                          ), // Borde azul para resaltar
+                        ),
+                        child: Image.network(
+                          _uploadedImageUrl!, // URL de la imagen subida a Storage
+                          fit: BoxFit.cover, // Ajusta la imagen al contenedor
+                          errorBuilder: (context, error, stackTrace) => Center(
+                            child: Text('Error al cargar imagen'),
+                          ), // Muestra mensaje si falla la carga
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
             ],
           ),
