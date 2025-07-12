@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "847774589247",
+    "project_id": "flutter-course-bcn-activa",
+    "storage_bucket": "flutter-course-bcn-activa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847774589247:android:2bbf2b3c1ca494bea7738a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV2M7JXDIU_TOHGhix2pHo91oqL4YyWGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
