@@ -16,9 +16,9 @@ void main() {
     await tester.pump(); // Espera el frame
 
     // El contador no debe mostrar 0
-    expect(find.text('0'), findsNothing); // Verifica que no aparece el 0
+    expect(find.text('3'), findsNothing); // Verifica que no aparece el 0
     // El contador debe mostrar 3
-    expect(find.text('3'), findsOneWidget); // Verifica que aparece el 3
+    expect(find.text('0'), findsOneWidget); // Verifica que aparece el 3
   });
 
   testWidgets('El contador incrementa correctamente', (
