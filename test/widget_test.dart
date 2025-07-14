@@ -1,30 +1,41 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:flutter_application_1/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget( MiApp());
+  testWidgets('El contador no es 0 tras 3 clics', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp()); // Construye la app principal
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Pulsa el botón de incrementar 3 veces
+    final boton = find.text('Incrementar'); // Busca el botón por su texto
+    await tester.tap(boton); // Primer clic
+    await tester.pump(); // Espera el frame
+    await tester.tap(boton); // Segundo clic
+    await tester.pump(); // Espera el frame
+    await tester.tap(boton); // Tercer clic
+    await tester.pump(); // Espera el frame
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // El contador no debe mostrar 0
+    expect(find.text('0'), findsNothing); // Verifica que no aparece el 0
+    // El contador debe mostrar 3
+    expect(find.text('3'), findsOneWidget); // Verifica que aparece el 3
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('El contador incrementa correctamente', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp()); // Construye la app principal
+
+    // El contador debe empezar en 0
+    expect(find.text('0'), findsOneWidget); // Verifica que aparece el 0
+    expect(find.text('1'), findsNothing); // Verifica que no aparece el 1
+
+    // Pulsa el botón de incrementar
+    await tester.tap(find.text('Incrementar')); // Clic en el botón
+    await tester.pump(); // Espera el frame
+
+    // Ahora el contador debe mostrar 1
+    expect(find.text('1'), findsOneWidget); // Verifica que aparece el 1
+    expect(find.text('0'), findsNothing); // Verifica que ya no aparece el 0
   });
 }
